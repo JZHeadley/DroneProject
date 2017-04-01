@@ -218,10 +218,16 @@ public class BebopActivity extends AppCompatActivity {
                                     break;
                                 case Constants.MESSAGE_TAKEOFF:
                                     Log.d(TAG, "handleMessage: TakingOff");
+                                    mBebopDrone.takeOff();
                                     break;
                                 case Constants.MESSAGE_LAND:
                                     Log.d(TAG, "handleMessage: Landing");
+                                    mBebopDrone.land();
                                     break;
+                                case Constants.MESSAGE_CALIBRATE:
+                                    Log.d(TAG, "handleMessage: Calibrating");
+                                    break;
+
                             }
                             break;
 

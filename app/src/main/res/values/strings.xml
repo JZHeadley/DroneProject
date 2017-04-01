@@ -21,4 +21,5 @@
     <string name="down_btn_txt">Down</string>
     <string name="up_btn_txt">Up</string>
     <string name="take_off">Take Off</string>
+    <string name="calibrate_btn_txt">Calibrate</string>
 </resources>

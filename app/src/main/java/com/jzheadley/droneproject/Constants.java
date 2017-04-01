@@ -39,4 +39,5 @@ public interface Constants {
     int MESSAGE_DOWN = 8;
     int MESSAGE_TAKEOFF = 9;
     int MESSAGE_LAND = 10;
+    int MESSAGE_CALIBRATE = 11;
 }

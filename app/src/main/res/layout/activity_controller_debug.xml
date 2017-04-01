@@ -31,6 +31,12 @@
         android:text="@string/take_off" />
 
     <Button
+        android:id="@+id/calibrate_drone_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/calibrate_btn_txt" />
+
+    <Button
         android:id="@+id/drone_emergency_btn"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

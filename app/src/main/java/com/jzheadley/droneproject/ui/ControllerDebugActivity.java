@@ -272,7 +272,6 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         Log.d("Azimuth", String.valueOf(AZIMUTH));
         Log.d("PITCH", String.valueOf(PITCH));
         Log.d("ROLL", String.valueOf(ROLL));
-        // Double[] values = {AZIMUTH, PITCH, ROLL};
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
         sendMessage(values);
 
@@ -281,6 +280,11 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     @OnClick(R.id.drone_emergency_btn)
     public void emergencyBtn() {
         sendMessage(Constants.MESSAGE_OHSHIT + "");
+    }
+
+    @OnClick(R.id.calibrate_drone_btn)
+    public void calibrateBtnHandler() {
+        sendMessage(Constants.MESSAGE_CALIBRATE + "");
     }
 
     @OnClick(R.id.drone_takeoff_land_btn)

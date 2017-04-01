@@ -26,6 +26,7 @@ import com.jzheadley.droneproject.bluetooth.BluetoothChatService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ControllerDebugActivity extends AppCompatActivity implements OrientationSensorInterface {
     private static final String TAG = "ControllerDebugActivity";
@@ -93,6 +94,7 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
+    private boolean hasTakenOff = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,17 +109,47 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         upBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        sendMessage("Up");
-                        // Do something
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        // No longer down
-                        return true;
+                boolean flag = true;
+                while (flag) {
+                    // Log.d(TAG, "onTouch: WOOOO A LOOP!");
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            sendMessage(Constants.MESSAGE_UP + "");
+                            // Do something
+                            return true;
+                        // break;
+                        case MotionEvent.ACTION_UP:
+                            // No longer down
+                            flag = false;
+                            return true;
+                    }
+                    return false;
                 }
-                return false;
+                return true;
             }
+
+        });
+        downBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                boolean flag = true;
+                while (flag) {
+                    // Log.d(TAG, "onTouch: WOOOO A LOOP!");
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            sendMessage(Constants.MESSAGE_DOWN + "");
+                            // Do something
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            // No longer down
+                            flag = false;
+                            return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+
         });
 
     }
@@ -235,7 +267,6 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         }
     }
 
-
     @Override
     public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
         Log.d("Azimuth", String.valueOf(AZIMUTH));
@@ -244,6 +275,25 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         // Double[] values = {AZIMUTH, PITCH, ROLL};
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
         sendMessage(values);
+
+    }
+
+    @OnClick(R.id.drone_emergency_btn)
+    public void emergencyBtn() {
+        sendMessage(Constants.MESSAGE_OHSHIT + "");
+    }
+
+    @OnClick(R.id.drone_takeoff_land_btn)
+    public void takeoffLandBtnHandler() {
+        if (!hasTakenOff) {
+            takeoffLandBtn.setText("Land");
+            sendMessage(Constants.MESSAGE_TAKEOFF + "");
+        } else {
+            takeoffLandBtn.setText("Take Off");
+            sendMessage(Constants.MESSAGE_LAND + "");
+        }
+
+        hasTakenOff = !hasTakenOff;
 
     }
 }

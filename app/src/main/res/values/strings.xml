@@ -20,4 +20,5 @@
     <string name="emergency_stop_btn_txt">Emergency Stop</string>
     <string name="down_btn_txt">Down</string>
     <string name="up_btn_txt">Up</string>
+    <string name="take_off">Take Off</string>
 </resources>

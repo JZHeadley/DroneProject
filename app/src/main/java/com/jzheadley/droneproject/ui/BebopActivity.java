@@ -164,48 +164,72 @@ public class BebopActivity extends AppCompatActivity {
             }
         }
     };
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            // FragmentActivity activity = getActivity();
-            switch (msg.what) {
-                case Constants.MESSAGE_STATE_CHANGE:
-                    switch (msg.arg1) {
-                        case BluetoothChatService.STATE_CONNECTED:
-                            Log.d(TAG, "handleMessage: We connected to something...");
-                            // Log.d(TAG, "handleMessage: " + mConnectedDevice);
-                            // (getString(R.string.title_connected_to, mConnectedDeviceName));
-                            // mConversationArrayAdapter.clear();
+    private Handler handler =
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // FragmentActivity activity = getActivity();
+                    Log.d(TAG, "handleMessage: " + msg.what);
+                    switch (msg.what) {
+                        case Constants.MESSAGE_STATE_CHANGE:
+                            switch (msg.arg1) {
+                                case BluetoothChatService.STATE_CONNECTED:
+                                    Log.d(TAG, "handleMessage: We connected to something...");
+                                    // Log.d(TAG, "handleMessage: " + mConnectedDevice);
+                                    // (getString(R.string.title_connected_to, mConnectedDeviceName));
+                                    // mConversationArrayAdapter.clear();
+                                    break;
+                                case BluetoothChatService.STATE_CONNECTING:
+                                    Log.d(TAG, "handleMessage: Still trying to connect");
+                                    // setStatus(R.string.title_connecting);
+                                    break;
+                                case BluetoothChatService.STATE_LISTEN:
+                                case BluetoothChatService.STATE_NONE:
+                                    Log.e(TAG, "handleMessage: Couldn't connect?");
+                                    // setStatus(R.string.title_not_connected);
+                                    break;
+                            }
                             break;
-                        case BluetoothChatService.STATE_CONNECTING:
-                            Log.d(TAG, "handleMessage: Still trying to connect");
-                            // setStatus(R.string.title_connecting);
+                        case Constants.MESSAGE_WRITE:
+                            byte[] writeBuf = (byte[]) msg.obj;
+                            // construct a string from the buffer
+                            String writeMessage = new String(writeBuf);
+                            // the message written is in writeMessage
                             break;
-                        case BluetoothChatService.STATE_LISTEN:
-                        case BluetoothChatService.STATE_NONE:
-                            Log.e(TAG, "handleMessage: Couldn't connect?");
-                            // setStatus(R.string.title_not_connected);
+                        case Constants.MESSAGE_READ:
+                            Log.d(TAG, "handleMessage: " + msg);
+                            byte[] readBuf = (byte[]) msg.obj;
+                            // construct a string from the valid bytes in the buffer
+                            String readMessage = new String(readBuf, 0, msg.arg1);
+                            Log.d(TAG, "handleMessageReading: " + readMessage);
+
+                            int command = Integer.parseInt(readMessage);
+
+                            switch (command) {
+                                case Constants.MESSAGE_OHSHIT:
+                                    Log.d(TAG, "handleMessage: OhShit...");
+                                    mBebopDrone.emergency();
+                                    break;
+                                case Constants.MESSAGE_UP:
+                                    Log.d(TAG, "handleMessage: Going up");
+                                    break;
+                                case Constants.MESSAGE_DOWN:
+                                    Log.d(TAG, "handleMessage: Going down");
+                                    break;
+                                case Constants.MESSAGE_TAKEOFF:
+                                    Log.d(TAG, "handleMessage: TakingOff");
+                                    break;
+                                case Constants.MESSAGE_LAND:
+                                    Log.d(TAG, "handleMessage: Landing");
+                                    break;
+                            }
                             break;
+
                     }
-                    break;
-                case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                    // the message written is in writeMessage
-                    break;
-                case Constants.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    Log.d(TAG, "handleMessageReading: " + readMessage);
 
-                    break;
-            }
+                }
 
-        }
-
-    };
+            };
     private StringBuffer mOutStringBuffer;
 
     @Override

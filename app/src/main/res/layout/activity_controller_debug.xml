@@ -27,7 +27,8 @@
     <Button
         android:id="@+id/drone_takeoff_land_btn"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:text="@string/take_off" />
 
     <Button
         android:id="@+id/drone_emergency_btn"

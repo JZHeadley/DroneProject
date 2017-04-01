@@ -227,6 +227,8 @@ public class BebopActivity extends AppCompatActivity {
                                 case Constants.MESSAGE_CALIBRATE:
                                     Log.d(TAG, "handleMessage: Calibrating");
                                     break;
+                                default:
+                                    break;
 
                             }
                             break;

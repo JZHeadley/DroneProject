@@ -111,17 +111,22 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 boolean flag = true;
                 while (flag) {
-                    // Log.d(TAG, "onTouch: WOOOO A LOOP!");
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            sendMessage(Constants.MESSAGE_UP + "");
-                            // Do something
+                            Log.d(TAG, "onTouch: LOOP ACTION DOWN");
+                            flag = true;
                             return true;
                         // break;
                         case MotionEvent.ACTION_UP:
-                            // No longer down
+                            Log.d(TAG, "onTouch: LOOP ACTION UP");
+
                             flag = false;
                             return true;
+                    }
+                    if (flag) {
+                        sendMessage(Constants.MESSAGE_UP + "");
+                        Log.d(TAG, "onTouch: Sending Up");
+                        return true;
                     }
                     return false;
                 }
@@ -134,22 +139,27 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 boolean flag = true;
                 while (flag) {
-                    // Log.d(TAG, "onTouch: WOOOO A LOOP!");
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
-                            sendMessage(Constants.MESSAGE_DOWN + "");
-                            // Do something
+                            Log.d(TAG, "onTouch: LOOP ACTION DOWN");
+                            flag = true;
                             return true;
+                        // break;
                         case MotionEvent.ACTION_UP:
-                            // No longer down
+                            Log.d(TAG, "onTouch: LOOP ACTION UP");
+
                             flag = false;
                             return true;
+                    }
+                    if (flag) {
+                        sendMessage(Constants.MESSAGE_DOWN + "");
+                        Log.d(TAG, "onTouch: Sending Down");
+                        return true;
                     }
                     return false;
                 }
                 return true;
             }
-
         });
 
     }

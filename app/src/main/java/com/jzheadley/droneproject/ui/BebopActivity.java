@@ -202,24 +202,11 @@ public class BebopActivity extends AppCompatActivity {
 
                     break;
             }
+
         }
 
     };
     private StringBuffer mOutStringBuffer;
-
-   /* *//**
-     * Set up the UI and background operations for chat.
-     *//*
-    private void setupChat() {
-        Log.d(TAG, "setupChat()");
-
-
-        // Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothChatService(this, handler);
-
-        // Initialize the buffer for outgoing messages
-        mOutStringBuffer = new StringBuffer("");
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,73 +249,6 @@ public class BebopActivity extends AppCompatActivity {
             }
         }
     }
-/*
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bluetooth_chat, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.secure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
-                Intent serverIntent = new Intent(this, BluetoothDeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-                return true;
-            }
-            case R.id.insecure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
-                Intent serverIntent = new Intent(this, BluetoothDeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult: request: " + requestCode + " result: " + resultCode);
-        switch (requestCode) {
-            case REQUEST_CONNECT_DEVICE_SECURE:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    connectDevice(data, true);
-                }
-                break;
-            case REQUEST_CONNECT_DEVICE_INSECURE:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    connectDevice(data, false);
-                }
-                break;
-
-        }
-    }
-
-    */
-// /**
-//      * Establish connection with other device
-//      *
-//      * @param data   An {@link Intent} with {@link BluetoothDeviceListActivity#EXTRA_DEVICE_ADDRESS} extra.
-//      * @param secure Socket Security type - Secure (true) , Insecure (false)
-//      */
-/*
-
-    private void connectDevice(Intent data, boolean secure) {
-        // Get the device MAC address
-        String address = data.getExtras().getString(BluetoothDeviceListActivity.EXTRA_DEVICE_ADDRESS);
-        // Get the BluetoothDevice object
-        Log.d(TAG, "connectDevice: " + address);
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        Log.d(TAG, "connectDevice: " + device);
-        // Attempt to connect to the device
-        mChatService.connect(device, secure);
-    }
-*/
 
     @Override
     public void onBackPressed() {

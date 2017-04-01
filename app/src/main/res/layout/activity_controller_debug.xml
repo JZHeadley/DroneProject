@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     tools:context="com.jzheadley.droneproject.ui.ControllerDebugActivity">
-<TextView android:id="@+id/debug_controller_txtView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/debug_controller_txtView"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <Button
+        android:id="@+id/drone_up_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/up_btn_txt" />
+
+    <Button
+        android:id="@+id/drone_down_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/down_btn_txt" />
+
+    <Button
+        android:id="@+id/drone_takeoff_land_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <Button
+        android:id="@+id/drone_emergency_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/emergency_stop_btn_txt" />
 </LinearLayout>

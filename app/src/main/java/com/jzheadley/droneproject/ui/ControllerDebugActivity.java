@@ -5,8 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,9 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jzheadley.android_orientation_sensors.utils.OrientationSensorInterface;
 import com.jzheadley.droneproject.Constants;
 import com.jzheadley.droneproject.R;
 import com.jzheadley.droneproject.bluetooth.BluetoothChatService;
@@ -25,10 +27,19 @@ import com.jzheadley.droneproject.bluetooth.BluetoothChatService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ControllerDebugActivity extends AppCompatActivity implements SensorEventListener {
+public class ControllerDebugActivity extends AppCompatActivity implements OrientationSensorInterface {
     private static final String TAG = "ControllerDebugActivity";
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+    @BindView(R.id.drone_up_btn)
+    Button upBtn;
+    @BindView(R.id.drone_down_btn)
+    Button downBtn;
+    @BindView(R.id.drone_takeoff_land_btn)
+    Button takeoffLandBtn;
+    @BindView(R.id.drone_emergency_btn)
+    Button ohShitBtn;
+
     @BindView(R.id.debug_controller_txtView)
     TextView controllerDebugTxt;
     private BluetoothChatService bluetoothChatService;
@@ -90,9 +101,25 @@ public class ControllerDebugActivity extends AppCompatActivity implements Sensor
         ButterKnife.bind(this);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothChatService = new BluetoothChatService(this, handler);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        // mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        // mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        // mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        upBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        sendMessage("Up");
+                        // Do something
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        // No longer down
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -208,15 +235,15 @@ public class ControllerDebugActivity extends AppCompatActivity implements Sensor
         }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if ((mChatService.getState() == BluetoothChatService.STATE_CONNECTED)) {
-            sendMessage((Math.asin(sensorEvent.values[0]) * 2) + "");
-        }
-    }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
+        Log.d("Azimuth", String.valueOf(AZIMUTH));
+        Log.d("PITCH", String.valueOf(PITCH));
+        Log.d("ROLL", String.valueOf(ROLL));
+        // Double[] values = {AZIMUTH, PITCH, ROLL};
+        String values = AZIMUTH + " " + PITCH + " " + ROLL;
+        sendMessage(values);
 
     }
 }

@@ -17,4 +17,7 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     <string name="not_connected">You are not connected to a device</string>
+    <string name="emergency_stop_btn_txt">Emergency Stop</string>
+    <string name="down_btn_txt">Down</string>
+    <string name="up_btn_txt">Up</string>
 </resources>

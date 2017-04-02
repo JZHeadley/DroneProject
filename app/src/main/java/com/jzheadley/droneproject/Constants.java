@@ -43,4 +43,5 @@ public interface Constants {
     int MESSAGE_LAND = 10;
     int MESSAGE_CALIBRATE = 11;
 
+    int MESSAGE_FLIP = 14;
 }

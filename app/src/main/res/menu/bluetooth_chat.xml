@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,19 +15,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/secure_connect_scan"
         android:icon="@drawable/ic_action_device_access_bluetooth_searching"
-        android:showAsAction="ifRoom"
-        android:title="@string/secure_connect"/>
+        android:id="@+id/secure_connect_scan"
+        android:showAsAction="always"
+        android:title="@string/secure_connect" />
 
     <item
         android:id="@+id/insecure_connect_scan"
-        android:showAsAction="never"
-        android:title="@string/insecure_connect"/>
+        android:showAsAction="always"
+        android:title="@string/insecure_connect" />
 
     <item
         android:id="@+id/discoverable"
         android:showAsAction="never"
-        android:title="@string/discoverable"/>
+        android:title="@string/discoverable" />
 
 </menu>

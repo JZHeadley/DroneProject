@@ -10,15 +10,12 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
-    <Button
-        android:id="@+id/emergencyBt"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Emergency"
-        android:width="150dp" />
-
+    <com.google.vr.sdk.base.GvrView
+        android:id="@+id/vrView"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:visibility="invisible" />
 
 
     <TextView
@@ -54,8 +51,7 @@
         android:text="Azimuth: "
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF0000"
-        />
+        android:textColor="#FF0000" />
 
     <TextView
         android:gravity="center_horizontal"
@@ -67,8 +63,7 @@
         android:layout_width="wrap_content"
         android:text="Pitch: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF0000"
-        />
+        android:textColor="#FF0000" />
 
     <TextView
         android:gravity="center_horizontal"
@@ -80,15 +75,35 @@
         android:layout_width="wrap_content"
         android:text="Roll: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF0000"
-        />
+        android:textColor="#FF0000" />
 
-    <Button
-        android:id="@+id/VR_Btn"
+    <LinearLayout
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/emergencyBt"
-        android:layout_width="wrap_content"
-        android:text="VR" />
+        android:layout_width="wrap_content">
+
+        <Button
+            android:id="@+id/bluetooth_btn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="ConnectBT" />
+
+
+        <Button
+            android:id="@+id/emergencyBt"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Emergency"
+            android:width="150dp" />
+
+        <Button
+            android:id="@+id/VR_Btn"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="VR" />
+    </LinearLayout>
 </RelativeLayout>

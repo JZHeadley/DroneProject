@@ -1,5 +1,12 @@
 package com.jzheadley.droneproject.ui;
 
+import com.google.vr.sdk.base.AndroidCompat;
+import com.google.vr.sdk.base.Eye;
+import com.google.vr.sdk.base.GvrActivity;
+import com.google.vr.sdk.base.GvrView;
+import com.google.vr.sdk.base.HeadTransform;
+import com.google.vr.sdk.base.Viewport;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -9,11 +16,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,25 +35,40 @@ import com.jzheadley.droneproject.view.BebopVideoView;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_MEDIARECORDEVENT_PICTUREEVENTCHANGED_ERROR_ENUM;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_ENUM;
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM;
+import com.parrot.arsdk.arcontroller.ARCONTROLLER_ERROR_ENUM;
 import com.parrot.arsdk.arcontroller.ARControllerCodec;
+import com.parrot.arsdk.arcontroller.ARDeviceController;
+import com.parrot.arsdk.arcontroller.ARDeviceControllerStreamListener;
 import com.parrot.arsdk.arcontroller.ARFrame;
 import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceService;
 
+import javax.microedition.khronos.egl.EGLConfig;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class BebopActivity extends AppCompatActivity implements OrientationSensorInterface {
+public class BebopActivity extends GvrActivity implements OrientationSensorInterface, GvrView.StereoRenderer, ARDeviceControllerStreamListener {
 
     private static final String TAG = "BebopActivity";
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+    private static double az;
+    private static double pit;
+    private static double rol;
     @BindView(R.id.videoView)
     BebopVideoView mVideoView;
+
     @BindView(R.id.batteryLabel)
     TextView mBatteryLabel;
 
     @BindView(R.id.VR_Btn)
     Button vrBtn;
+
+    @BindView(R.id.vrView)
+    GvrView gvrView;
+    @BindView(R.id.bluetooth_btn)
+    Button bluetoothBtn;
     private BluetoothChatService bluetoothChatService;
     private BebopDrone mBebopDrone;
     private ProgressDialog mConnectionProgressDialog;
@@ -56,11 +76,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
     private int mNbMaxDownload;
     private BluetoothChatService mChatService = null;
     private BluetoothAdapter mBluetoothAdapter = null;
-
-    private static double az;
-    private static double pit;
-    private static double rol;
-
     private int mCurrentDownloadIndex;
     private final BebopDrone.Listener mBebopListener = new BebopDrone.Listener() {
         @Override
@@ -89,24 +104,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         @Override
         public void onPilotingStateChanged(
                 ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_ENUM state) {
-//            switch (state) {
-//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_LANDED:
-//                    mTakeOffLandBt.setText("Take off");
-//                    mTakeOffLandBt.setEnabled(true);
-//                    mDownloadBt.setEnabled(true);
-//                    break;
-//
-//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING:
-//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
-//                    mTakeOffLandBt.setText("Land");
-//                    mTakeOffLandBt.setEnabled(true);
-//                    mDownloadBt.setEnabled(false);
-//                    break;
-//
-//                default:
-//                    mTakeOffLandBt.setEnabled(false);
-//                    mDownloadBt.setEnabled(false);
-//            }
         }
 
         @Override
@@ -207,7 +204,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                             // construct a string from the valid bytes in the buffer
                             String readMessage = new String(readBuf, 0, msg.arg1);
                             Log.d(TAG, "handleMessageReading: " + readMessage);
-                            String [] string = new String[3];
+                            String[] string = new String[3];
                             string = readMessage.split(" ");
                             int command = 0;
 
@@ -264,6 +261,10 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                                     Log.d(TAG, "handleMessage: Calibrating");
                                     DynamicsUtilities.calibrate();
                                     break;
+                                case Constants.MESSAGE_FLIP:
+                                    Log.d(TAG, "handleMessage: Calibrating");
+                                    mBebopDrone.flip();
+                                    break;
                                 default:
                                     Log.d(TAG, "handleMessage: " + readMessage.split(" "));
                                     break;
@@ -280,31 +281,11 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
 
     @Override
     protected void onResume() {
-
         super.onResume();
-
-
         Orientation orientationSensor = new Orientation(this.getApplicationContext(), this);
-
-        //------Turn Orientation sensor ON-------
-        // set tolerance for any directions
         orientationSensor.init(1.0, 1.0, 1.0);
-
-        // set output speed and turn initialized sensor on
-        // 0 Normal
-        // 1 UI
-        // 2 GAME
-        // 3 FASTEST
         orientationSensor.on(0);
-        //---------------------------------------
-
-
-        // turn orientation sensor off
-        //orientationSensor.off();
-
-        // return true or false
         orientationSensor.isSupport();
-
     }
 
     @Override
@@ -312,7 +293,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         DynamicsUtilities.viewZ = Math.toRadians(AZIMUTH);
         DynamicsUtilities.viewX = Math.toRadians(PITCH);
         DynamicsUtilities.viewY = Math.toRadians(ROLL);
-
 
 
         DynamicsUtilities.calcSlaveYaw();
@@ -349,10 +329,22 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         bluetoothChatService = new BluetoothChatService(this, handler);
         initIHM();
         Intent intent = getIntent();
-        ARDiscoveryDeviceService service =
-                intent.getParcelableExtra(DeviceListActivity.EXTRA_DEVICE_SERVICE);
+        ARDiscoveryDeviceService service = intent.getParcelableExtra(DeviceListActivity.EXTRA_DEVICE_SERVICE);
         mBebopDrone = new BebopDrone(this, service);
         mBebopDrone.addListener(mBebopListener);
+
+        gvrView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
+        gvrView.setTransitionViewEnabled(true);
+        gvrView.setDistortionCorrectionEnabled(true);
+
+        // This line is really important! It's what enables the low-latency
+        // VR experience. Without it, you'll have a headache after five minutes.
+        gvrView.setAsyncReprojectionEnabled(true);
+        AndroidCompat.setSustainedPerformanceMode(this, true);
+        gvrView.setRenderer(this);
+        // setGvrView(gvrView);
+
+
     }
 
     @Override
@@ -410,39 +402,23 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                 mBebopDrone.emergency();
             }
         });
-
-      /*  mDownloadBt.setEnabled(false);
-        mDownloadBt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mBebopDrone.getLastFlightMedias();
-
-                mDownloadProgressDialog =
-                        new ProgressDialog(BebopActivity.this, R.style.AppCompatAlertDialogStyle);
-                mDownloadProgressDialog.setIndeterminate(true);
-                mDownloadProgressDialog.setMessage("Fetching medias");
-                mDownloadProgressDialog.setCancelable(false);
-                mDownloadProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mBebopDrone.cancelGetLastFlightMedias();
-                            }
-                        });
-                mDownloadProgressDialog.show();
-            }
-        });*/
-
-        vrBtn.setOnTouchListener(new View.OnTouchListener() {
+        vrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                return true;
+            public void onClick(View view) {
+                if (gvrView.getVisibility() == View.INVISIBLE) {
+                    mVideoView.setVisibility(View.INVISIBLE);
+                    setGvrView(gvrView);
+                    gvrView.setVisibility(View.VISIBLE);
+                } else {
+                    gvrView.setVisibility(View.INVISIBLE);
+                    mVideoView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
 
     /**
-     * Set up the UI and background operations for chat.
+     * `hat.
      */
     private void setupChat() {
         Log.d(TAG, "setupChat()");
@@ -458,7 +434,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bluetooth_chat, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -539,5 +515,57 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
             mOutStringBuffer.setLength(0);
             // controllerDebugTxt.setText(mOutStringBuffer);
         }
+    }
+
+    @Override
+    public void onNewFrame(HeadTransform headTransform) {
+
+    }
+
+    @Override
+    public void onDrawEye(Eye eye) {
+        // Log.d(TAG, "onDrawEye: " + eye);
+
+    }
+
+    @Override
+    public void onFinishFrame(Viewport viewport) {
+
+    }
+
+    @Override
+    public void onSurfaceChanged(int i, int i1) {
+        Log.i(TAG, "onSurfaceChanged");
+    }
+
+    @Override
+    public void onSurfaceCreated(EGLConfig eglConfig) {
+
+    }
+
+    @Override
+    public void onRendererShutdown() {
+        Log.i(TAG, "onRendererShutdown");
+    }
+
+    @Override
+    public ARCONTROLLER_ERROR_ENUM configureDecoder(ARDeviceController deviceController, ARControllerCodec codec) {
+        return null;
+    }
+
+    @Override
+    public ARCONTROLLER_ERROR_ENUM onFrameReceived(ARDeviceController deviceController, ARFrame frame) {
+        return null;
+    }
+
+    @Override
+    public void onFrameTimeout(ARDeviceController deviceController) {
+
+    }
+
+    @OnClick(R.id.bluetooth_btn)
+    public void bluetoothConnect() {
+        Intent serverIntent = new Intent(this, BluetoothDeviceListActivity.class);
+        startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
     }
 }

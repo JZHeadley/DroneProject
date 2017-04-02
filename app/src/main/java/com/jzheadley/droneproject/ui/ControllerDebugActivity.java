@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,6 +43,9 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     Button takeoffLandBtn;
     @BindView(R.id.drone_emergency_btn)
     Button ohShitBtn;
+
+    @BindView(R.id.flip_btn)
+    Button flipBtn;
 
     @BindView(R.id.debug_controller_txtView)
     TextView controllerDebugTxt;
@@ -101,16 +103,17 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     private Orientation orientationSensor;
     private boolean hasTakenOff = false;
 
-    public void vibrate(){
+    public void vibrate() {
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vib.vibrate(300);
     }
 
-    public void vibratePattern(){
+    public void vibratePattern() {
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {0, 200, 50, 200, 50};
         vib.vibrate(pattern, -1);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,7 +312,7 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
         //updateNumber++;
         //if (updateNumber%10 == 0) {
-            sendMessage(values);
+        sendMessage(values);
         //}
     }
 
@@ -333,5 +336,10 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
             sendMessage(Constants.MESSAGE_LAND + "");
         }
         hasTakenOff = !hasTakenOff;
+    }
+
+    @OnClick(R.id.flip_btn)
+    public void onFlipBtn() {
+        sendMessage(Constants.MESSAGE_FLIP + "");
     }
 }

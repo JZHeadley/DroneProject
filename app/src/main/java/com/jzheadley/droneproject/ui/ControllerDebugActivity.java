@@ -281,9 +281,9 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
 
     @Override
     public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
-        Log.d("Azimuth", String.valueOf(AZIMUTH));
+        /*Log.d("Azimuth", String.valueOf(AZIMUTH));
         Log.d("PITCH", String.valueOf(PITCH));
-        Log.d("ROLL", String.valueOf(ROLL));
+        Log.d("ROLL", String.valueOf(ROLL));*/
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
         sendMessage(values);
     }

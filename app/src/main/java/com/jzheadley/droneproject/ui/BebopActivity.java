@@ -19,8 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jzheadley.android_orientation_sensors.utils.OrientationSensorInterface;
 import com.jzheadley.android_orientation_sensors.sensors.Orientation;
+import com.jzheadley.android_orientation_sensors.utils.OrientationSensorInterface;
 import com.jzheadley.droneproject.Constants;
 import com.jzheadley.droneproject.R;
 import com.jzheadley.droneproject.bluetooth.BluetoothChatService;
@@ -34,7 +34,6 @@ import com.parrot.arsdk.arcontroller.ARControllerCodec;
 import com.parrot.arsdk.arcontroller.ARFrame;
 import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceService;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,7 +45,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
     BebopVideoView mVideoView;
     @BindView(R.id.batteryLabel)
     TextView mBatteryLabel;
-    Button mDownloadBt;
+
     @BindView(R.id.VR_Btn)
     Button vrBtn;
     private BluetoothChatService bluetoothChatService;
@@ -204,7 +203,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                             String readMessage = new String(readBuf, 0, msg.arg1);
                             Log.d(TAG, "handleMessageReading: " + readMessage);
 
-                            int command = Integer.parseInt(readMessage);
+                            int command = Integer.parseInt(readMessage.split(" ")[0]);
 
                             switch (command) {
                                 case Constants.MESSAGE_OHSHIT:
@@ -288,7 +287,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         DynamicsUtilities.viewY = Math.toRadians(ROLL);
 
 
-
         DynamicsUtilities.calcSlaveYaw();
         /*((TextView)findViewById(R.id.z)).setText(String.format("DZ: %.0f VZ: %.0f GL%.0f",
                 Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
@@ -297,7 +295,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         mBebopDrone.setYaw(DynamicsUtilities.yaw);
 
         DynamicsUtilities.calcFixedPitchRoll();
-        ((TextView)findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
+        ((TextView) findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
                 DynamicsUtilities.pitch,
                 DynamicsUtilities.roll,
                 Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
@@ -380,7 +378,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
             }
         });
 
-        mDownloadBt.setEnabled(false);
+      /*  mDownloadBt.setEnabled(false);
         mDownloadBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mBebopDrone.getLastFlightMedias();
@@ -399,7 +397,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                         });
                 mDownloadProgressDialog.show();
             }
-        });
+        });*/
 
         vrBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override

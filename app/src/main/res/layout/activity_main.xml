@@ -4,54 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.jzheadley.droneproject.ui.MainActivity">
+    android:weightSum="1"
+    tools:context="com.jzheadley.droneproject.ui.MainActivity"
+    android:background="#646464">
+
 
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/app_name"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:textSize="35sp"
-        android:textColor="#FFFFFF"/>
+        android:layout_marginTop="10dp"
+        android:layout_weight=".08"
+        android:text="@string/app_name"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp" />
 
-    <Button
+    <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_launcher"
-        style="?android:attr/borderlessButtonStyle"
-        android:clickable="false" />
+        android:layout_weight=".5"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher" />
 
     <Button
         android:id="@+id/videoBtn"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="13dp"
+        android:layout_weight=".20"
         android:background="@xml/button_round"
         android:text="@string/video_choice_btn_txt"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:layout_weight="1"/>
+        android:textColor="#333333"
+        android:textSize="40sp" />
 
     <Button
         android:id="@+id/controllerBtn"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_weight=".20"
         android:background="@xml/button_round"
+        android:padding="5dp"
         android:text="@string/drone_controller_btn_txt"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:layout_weight="1"/>
+        android:textColor="#333333"
+        android:textSize="40sp" />
 
 </LinearLayout>

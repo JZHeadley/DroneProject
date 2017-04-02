@@ -212,13 +212,23 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                             int command = 0;
 
                             if (string.length == 3) {
-                                az = Double.parseDouble(string[0]);
-                                pit = Double.parseDouble(string[1]);
-                                rol = Double.parseDouble(string[2]);
-                                ((TextView) findViewById(R.id.pitchTxt)).setText(String.format("RZDeg:%.2f", az));
-                                DynamicsUtilities.setRemoteAttitudeInDegrees(az, pit, rol);
+                                try {
+                                    az = Double.parseDouble(string[0]);
+                                    pit = Double.parseDouble(string[1]);
+                                    rol = Double.parseDouble(string[2]);
+                                    ((TextView) findViewById(R.id.pitchTxt)).setText(String.format("RawPit:%.2f", pit));
+                                    DynamicsUtilities.setRemoteAttitudeInDegrees(az, pit, rol);
+                                } catch (Exception e) {
+                                    Log.w(TAG, "handleMessage: ", e);
+                                }
+
                             } else {
-                                command = Integer.parseInt(string[0]);
+                                try {
+                                    command = Integer.parseInt(string[0]);
+                                } catch (NumberFormatException e) {
+                                    Log.w(TAG, "handleMessage: ", e);
+
+                                }
                             }
 
                             switch (command) {
@@ -312,7 +322,11 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                 Math.toDegrees(DynamicsUtilities.goLeftRad)));*/
         mBebopDrone.setYaw(DynamicsUtilities.yaw);
 
-        DynamicsUtilities.calcPitchRoll();
+
+        DynamicsUtilities.calcInterimTilt();
+        ((TextView) findViewById(R.id.azimuthTxt)).setText(String.format("Theta:%.1f",
+                Math.toDegrees(DynamicsUtilities.thetaMoveRightFromCenterline)
+        ));
         ((TextView) findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d RZ:%.2f DZ:%.2f VZ:%.2f",
                 DynamicsUtilities.pitch,
                 DynamicsUtilities.roll,

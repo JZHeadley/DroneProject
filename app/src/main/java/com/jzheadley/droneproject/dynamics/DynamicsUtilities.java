@@ -93,16 +93,53 @@ public class DynamicsUtilities {
         roll = (byte) (100.0 * rollInRadians / maxTiltInRadians);
     }
 
+    public static void calcInterimTilt() {
+        thetaMoveRightFromCenterline = normalizeRad((remZ - remZ0) - (droneZ - droneZ0));
 
+        if (remX < -0.5) {
+            flag = 1;
+            pitch = (byte) (-60.0 * Math.cos(thetaMoveRightFromCenterline));
+            roll = (byte) (-60.0 * Math.sin(thetaMoveRightFromCenterline));
+        } else if (remX > 0.0) {
+            flag = 1;
+            pitch = (byte) (60.0 * Math.cos(thetaMoveRightFromCenterline));
+            roll = (byte) (60.0 * Math.sin(thetaMoveRightFromCenterline));
+        } else {
+            pitch = 0;
+            roll = 0;
+            flag = 0;
+        }
+    }
 
     public static void calcPitchOnly() {
-        double exaggeratedPitch = Math.min(maxViewPitch, Math.max(-maxViewPitch, viewY));
+        /*double exaggeratedPitch = Math.min(maxViewPitch, Math.max(-maxViewPitch, viewY));
         pitch = (byte) (exaggeratedPitch * 100 / maxViewPitch);
+
+        roll = (byte) 0;
         if (pitch > 20 || pitch < -20) {
             flag = 1;
         } else {
             flag = 0;
+        }*/
+
+        double controlThreshold = Math.toRadians(30.0);
+
+        double nomPitch = 0;
+        if (remX < -0.5) {
+            flag = 1;
+            nomPitch = maxTiltInRadians/2.0;
+            pitch = -49;
+        } else if (remX > 0.0) {
+            flag = 1;
+            nomPitch = -maxTiltInRadians/2.0;
+            pitch = 49;
+        } else {
+            pitch = 0;
+            flag = 0;
         }
+
+        //pitch = (byte) (100.0 * nomPitch / maxTiltInRadians) ;
+        roll = 0;
     }
 
     public static void calcFixedPitchRoll() {

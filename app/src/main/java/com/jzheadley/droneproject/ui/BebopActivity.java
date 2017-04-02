@@ -19,10 +19,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jzheadley.android_orientation_sensors.utils.OrientationSensorInterface;
+import com.jzheadley.android_orientation_sensors.sensors.Orientation;
 import com.jzheadley.droneproject.Constants;
 import com.jzheadley.droneproject.R;
 import com.jzheadley.droneproject.bluetooth.BluetoothChatService;
 import com.jzheadley.droneproject.drone.BebopDrone;
+import com.jzheadley.droneproject.dynamics.DynamicsUtilities;
 import com.jzheadley.droneproject.view.BebopVideoView;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_MEDIARECORDEVENT_PICTUREEVENTCHANGED_ERROR_ENUM;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_ENUM;
@@ -31,10 +34,11 @@ import com.parrot.arsdk.arcontroller.ARControllerCodec;
 import com.parrot.arsdk.arcontroller.ARFrame;
 import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceService;
 
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BebopActivity extends AppCompatActivity {
+public class BebopActivity extends AppCompatActivity implements OrientationSensorInterface {
     private static final String TAG = "BebopActivity";
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
@@ -250,6 +254,63 @@ public class BebopActivity extends AppCompatActivity {
 
             };
     private StringBuffer mOutStringBuffer;
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+
+        Orientation orientationSensor = new Orientation(this.getApplicationContext(), this);
+
+        //------Turn Orientation sensor ON-------
+        // set tolerance for any directions
+        orientationSensor.init(1.0, 1.0, 1.0);
+
+        // set output speed and turn initialized sensor on
+        // 0 Normal
+        // 1 UI
+        // 2 GAME
+        // 3 FASTEST
+        orientationSensor.on(0);
+        //---------------------------------------
+
+
+        // turn orientation sensor off
+        //orientationSensor.off();
+
+        // return true or false
+        orientationSensor.isSupport();
+
+    }
+
+    @Override
+    public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
+        DynamicsUtilities.viewZ = Math.toRadians(AZIMUTH);
+        DynamicsUtilities.viewX = Math.toRadians(PITCH);
+        DynamicsUtilities.viewY = Math.toRadians(ROLL);
+
+
+
+        DynamicsUtilities.calcSlaveYaw();
+        /*((TextView)findViewById(R.id.z)).setText(String.format("DZ: %.0f VZ: %.0f GL%.0f",
+                Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
+                Math.toDegrees(DynamicsUtilities.viewZ - DynamicsUtilities.viewZ0),
+                Math.toDegrees(DynamicsUtilities.goLeftRad)));*/
+        mBebopDrone.setYaw(DynamicsUtilities.yaw);
+
+        DynamicsUtilities.calcFixedPitchRoll();
+        ((TextView)findViewById(R.id.z)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
+                DynamicsUtilities.pitch,
+                DynamicsUtilities.roll,
+                Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
+                Math.toDegrees(DynamicsUtilities.viewZ - DynamicsUtilities.viewZ0)
+        ));
+        mBebopDrone.setPitch(DynamicsUtilities.pitch);
+        mBebopDrone.setRoll(DynamicsUtilities.roll);
+        mBebopDrone.setFlag(DynamicsUtilities.flag);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

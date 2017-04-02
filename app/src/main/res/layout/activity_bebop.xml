@@ -45,7 +45,7 @@
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/azimuth_tv"
+        android:id="@+id/azimuthTxt"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/batteryLabel"
@@ -57,27 +57,27 @@
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/textView3"
+        android:id="@+id/pitchTxt"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/azimuth_tv"
+        android:layout_below="@+id/azimuthTxt"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Pitch: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:width="50dp" />
+        />
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/textView4"
+        android:id="@+id/rollTxt"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/pitchTxt"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Roll: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:width="50dp" />
+       />
 
     <Button
         android:id="@+id/VR_Btn"

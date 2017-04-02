@@ -46,9 +46,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
     BebopVideoView mVideoView;
     @BindView(R.id.batteryLabel)
     TextView mBatteryLabel;
-    @BindView(R.id.takeOffOrLandBt)
-    Button mTakeOffLandBt;
-    @BindView(R.id.downloadBt)
     Button mDownloadBt;
     @BindView(R.id.VR_Btn)
     Button vrBtn;
@@ -88,24 +85,24 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         @Override
         public void onPilotingStateChanged(
                 ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_ENUM state) {
-            switch (state) {
-                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_LANDED:
-                    mTakeOffLandBt.setText("Take off");
-                    mTakeOffLandBt.setEnabled(true);
-                    mDownloadBt.setEnabled(true);
-                    break;
-
-                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING:
-                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
-                    mTakeOffLandBt.setText("Land");
-                    mTakeOffLandBt.setEnabled(true);
-                    mDownloadBt.setEnabled(false);
-                    break;
-
-                default:
-                    mTakeOffLandBt.setEnabled(false);
-                    mDownloadBt.setEnabled(false);
-            }
+//            switch (state) {
+//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_LANDED:
+//                    mTakeOffLandBt.setText("Take off");
+//                    mTakeOffLandBt.setEnabled(true);
+//                    mDownloadBt.setEnabled(true);
+//                    break;
+//
+//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING:
+//                case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
+//                    mTakeOffLandBt.setText("Land");
+//                    mTakeOffLandBt.setEnabled(true);
+//                    mDownloadBt.setEnabled(false);
+//                    break;
+//
+//                default:
+//                    mTakeOffLandBt.setEnabled(false);
+//                    mDownloadBt.setEnabled(false);
+//            }
         }
 
         @Override
@@ -300,7 +297,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         mBebopDrone.setYaw(DynamicsUtilities.yaw);
 
         DynamicsUtilities.calcFixedPitchRoll();
-        ((TextView)findViewById(R.id.z)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
+        ((TextView)findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
                 DynamicsUtilities.pitch,
                 DynamicsUtilities.roll,
                 Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
@@ -383,27 +380,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
             }
         });
 
-        mTakeOffLandBt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                switch (mBebopDrone.getFlyingState()) {
-                    case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_LANDED:
-                        mBebopDrone.takeOff();
-                        break;
-                    case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING:
-                    case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
-                        mBebopDrone.land();
-                        break;
-                    default:
-                }
-            }
-        });
-
-        findViewById(R.id.takePictureBt).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mBebopDrone.takePicture();
-            }
-        });
-
         mDownloadBt.setEnabled(false);
         mDownloadBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -422,198 +398,6 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                             }
                         });
                 mDownloadProgressDialog.show();
-            }
-        });
-
-        findViewById(R.id.gazUpBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setGaz((byte) 50);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setGaz((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.gazDownBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setGaz((byte) -50);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setGaz((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.yawLeftBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setYaw((byte) -50);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setYaw((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.yawRightBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setYaw((byte) 50);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setYaw((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.forwardBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setPitch((byte) 50);
-                        mBebopDrone.setFlag((byte) 1);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setPitch((byte) 0);
-                        mBebopDrone.setFlag((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.backBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setPitch((byte) -50);
-                        mBebopDrone.setFlag((byte) 1);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setPitch((byte) 0);
-                        mBebopDrone.setFlag((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.rollLeftBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setRoll((byte) -50);
-                        mBebopDrone.setFlag((byte) 1);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setRoll((byte) 0);
-                        mBebopDrone.setFlag((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        findViewById(R.id.rollRightBt).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.setPressed(true);
-                        mBebopDrone.setRoll((byte) 50);
-                        mBebopDrone.setFlag((byte) 1);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        v.setPressed(false);
-                        mBebopDrone.setRoll((byte) 0);
-                        mBebopDrone.setFlag((byte) 0);
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                return true;
             }
         });
 

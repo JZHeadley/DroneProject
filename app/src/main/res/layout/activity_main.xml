@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.jzheadley.droneproject.ui.MainActivity">
 
     <Button
-        android:gravity="center_horizontal|center_vertical"
-        android:id="@+id/videoBtn"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
-        android:text="@string/video_choice_btn_txt"
-        android:textSize="20sp" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_launcher"
+        android:clickable="false" />
 
     <Button
-        android:gravity="center_horizontal|center_vertical"
-        android:id="@+id/controllerBtn"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_width="wrap_content"
-        android:text="@string/drone_controller_btn_txt"
-        android:textSize="20sp" />
+        android:id="@+id/videoBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/logo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@xml/button_round"
+        android:text="@string/video_choice_btn_txt"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/controllerBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="130dp"
+        android:layout_below="@+id/videoBtn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@xml/button_round"
+        android:text="@string/drone_controller_btn_txt"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp" />
+
+</RelativeLayout>

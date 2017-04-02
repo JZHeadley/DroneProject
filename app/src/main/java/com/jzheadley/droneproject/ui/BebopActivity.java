@@ -210,11 +210,21 @@ public class BebopActivity extends AppCompatActivity {
                                     Log.d(TAG, "handleMessage: OhShit...");
                                     mBebopDrone.emergency();
                                     break;
-                                case Constants.MESSAGE_UP:
+                                case Constants.MESSAGE_UP_START:
                                     Log.d(TAG, "handleMessage: Going up");
+                                    mBebopDrone.setGaz((byte) 50);
                                     break;
-                                case Constants.MESSAGE_DOWN:
+                                case Constants.MESSAGE_UP_STOP:
+                                    Log.d(TAG, "handleMessage: Going up");
+                                    mBebopDrone.setGaz((byte) 0);
+                                    break;
+                                case Constants.MESSAGE_DOWN_START:
                                     Log.d(TAG, "handleMessage: Going down");
+                                    mBebopDrone.setGaz((byte) -50);
+                                    break;
+                                case Constants.MESSAGE_DOWN_STOP:
+                                    Log.d(TAG, "handleMessage: Going down");
+                                    mBebopDrone.setGaz((byte) 0);
                                     break;
                                 case Constants.MESSAGE_TAKEOFF:
                                     Log.d(TAG, "handleMessage: TakingOff");
@@ -228,6 +238,7 @@ public class BebopActivity extends AppCompatActivity {
                                     Log.d(TAG, "handleMessage: Calibrating");
                                     break;
                                 default:
+                                    Log.d(TAG, "handleMessage: " + readMessage.split(" "));
                                     break;
 
                             }

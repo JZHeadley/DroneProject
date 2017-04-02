@@ -35,9 +35,12 @@ public interface Constants {
     String DEVICE_NAME = "device_name";
     String TOAST = "toast";
 
-    int MESSAGE_UP = 7;
-    int MESSAGE_DOWN = 8;
+    int MESSAGE_UP_START = 7;
+    int MESSAGE_UP_STOP = 12;
+    int MESSAGE_DOWN_START = 8;
+    int MESSAGE_DOWN_STOP = 13;
     int MESSAGE_TAKEOFF = 9;
     int MESSAGE_LAND = 10;
     int MESSAGE_CALIBRATE = 11;
+
 }

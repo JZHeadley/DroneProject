@@ -28,7 +28,7 @@ public class TestActivity extends Activity implements OrientationSensorInterface
 
 
         // turn orientation sensor off
-        orientationSensor.off();
+        //orientationSensor.off();
 
         // return true or false
         orientationSensor.isSupport();

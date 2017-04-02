@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jzheadley.android_orientation_sensors.sensors.Orientation;
 import com.jzheadley.android_orientation_sensors.utils.OrientationSensorInterface;
 import com.jzheadley.droneproject.Constants;
 import com.jzheadley.droneproject.R;
@@ -92,8 +91,9 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     };
     private StringBuffer mOutStringBuffer;
 
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
+    //private SensorManager mSensorManager;
+    //private Sensor mSensor;
+    private Orientation orientationSensor;
     private boolean hasTakenOff = false;
 
     @Override
@@ -106,29 +106,34 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         // mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         // mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         // mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        orientationSensor = new Orientation(this.getApplicationContext(), this);
+        //------Turn Orientation sensor ON-------
+        // set tolerance for any directions
+        orientationSensor.init(1.0, 1.0, 1.0);
+        // set output speed and turn initialized sensor on
+        // 0 Normal
+        // 1 UI
+        // 2 GAME
+        // 3 FASTEST
+        orientationSensor.on(0);
+        //---------------------------------------
+        // turn orientation sensor off
+        //orientationSensor.off();
+        // return true or false
+        orientationSensor.isSupport();
         upBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                boolean flag = true;
-                while (flag) {
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            Log.d(TAG, "onTouch: LOOP ACTION DOWN");
-                            flag = true;
-                            return true;
-                        // break;
-                        case MotionEvent.ACTION_UP:
-                            Log.d(TAG, "onTouch: LOOP ACTION UP");
-
-                            flag = false;
-                            return true;
-                    }
-                    if (flag) {
-                        sendMessage(Constants.MESSAGE_UP + "");
-                        Log.d(TAG, "onTouch: Sending Up");
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d(TAG, "onTouch: LOOP ACTION DOWN");
+                        sendMessage(Constants.MESSAGE_UP_START + "");
                         return true;
-                    }
-                    return false;
+                    // break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d(TAG, "onTouch: LOOP ACTION UP");
+                        sendMessage(Constants.MESSAGE_UP_STOP + "");
+                        return true;
                 }
                 return true;
             }
@@ -137,26 +142,16 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         downBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                boolean flag = true;
-                while (flag) {
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            Log.d(TAG, "onTouch: LOOP ACTION DOWN");
-                            flag = true;
-                            return true;
-                        // break;
-                        case MotionEvent.ACTION_UP:
-                            Log.d(TAG, "onTouch: LOOP ACTION UP");
-
-                            flag = false;
-                            return true;
-                    }
-                    if (flag) {
-                        sendMessage(Constants.MESSAGE_DOWN + "");
-                        Log.d(TAG, "onTouch: Sending Down");
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d(TAG, "onTouch: LOOP ACTION DOWN");
+                        sendMessage(Constants.MESSAGE_DOWN_START + "");
                         return true;
-                    }
-                    return false;
+                    // break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d(TAG, "onTouch: LOOP ACTION UP");
+                        sendMessage(Constants.MESSAGE_DOWN_STOP + "");
+                        return true;
                 }
                 return true;
             }
@@ -168,6 +163,7 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     protected void onStop() {
         super.onStop();
         mChatService.stop();
+        orientationSensor.off();
     }
 
     /**
@@ -278,13 +274,18 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        orientationSensor.on(0);
+    }
+
+    @Override
     public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
         Log.d("Azimuth", String.valueOf(AZIMUTH));
         Log.d("PITCH", String.valueOf(PITCH));
         Log.d("ROLL", String.valueOf(ROLL));
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
         sendMessage(values);
-
     }
 
     @OnClick(R.id.drone_emergency_btn)
@@ -306,8 +307,6 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
             takeoffLandBtn.setText("Take Off");
             sendMessage(Constants.MESSAGE_LAND + "");
         }
-
         hasTakenOff = !hasTakenOff;
-
     }
 }

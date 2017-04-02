@@ -20,7 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,12 +63,12 @@ public class BebopActivity extends GvrActivity implements OrientationSensorInter
     TextView mBatteryLabel;
 
     @BindView(R.id.VR_Btn)
-    Button vrBtn;
+    ImageButton vrBtn;
 
     @BindView(R.id.vrView)
     GvrView gvrView;
     @BindView(R.id.bluetooth_btn)
-    Button bluetoothBtn;
+    ImageButton bluetoothBtn;
     private BluetoothChatService bluetoothChatService;
     private BebopDrone mBebopDrone;
     private ProgressDialog mConnectionProgressDialog;

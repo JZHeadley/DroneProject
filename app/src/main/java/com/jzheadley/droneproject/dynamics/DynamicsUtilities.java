@@ -138,7 +138,7 @@ public class DynamicsUtilities {
     }
 
     public static void updateDroneAtt(double z) {
-        Log.d(TAG, "updateDroneAtt: DRONE Z:" + z);
+        //Log.d(TAG, "updateDroneAtt: DRONE Z:" + z);
         droneZ = z;
     }
 

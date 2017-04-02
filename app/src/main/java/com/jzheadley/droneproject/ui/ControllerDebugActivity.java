@@ -31,6 +31,8 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     private static final String TAG = "ControllerDebugActivity";
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+
+    private static long updateNumber = 0;
     @BindView(R.id.drone_up_btn)
     Button upBtn;
     @BindView(R.id.drone_down_btn)
@@ -280,12 +282,15 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     }
 
     @Override
-    public void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
+    public synchronized void orientation(Double AZIMUTH, Double PITCH, Double ROLL) {
         /*Log.d("Azimuth", String.valueOf(AZIMUTH));
         Log.d("PITCH", String.valueOf(PITCH));
         Log.d("ROLL", String.valueOf(ROLL));*/
         String values = AZIMUTH + " " + PITCH + " " + ROLL;
-        sendMessage(values);
+        //updateNumber++;
+        //if (updateNumber%10 == 0) {
+            sendMessage(values);
+        //}
     }
 
     @OnClick(R.id.drone_emergency_btn)

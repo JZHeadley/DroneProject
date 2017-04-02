@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DroneProject</string>
+    <string name="app_name">Rubber Necker</string>
     <string name="video_choice_btn_txt">Video</string>
     <string name="drone_controller_btn_txt">Drone Controller</string>
     <string name="drone_select_text">Please select your drone</string>

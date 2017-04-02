@@ -108,8 +108,8 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
 
     public void vibratePattern(){
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] pattern = {0, 150, 800};
-        vib.vibrate(pattern, 3);
+        long[] pattern = {0, 200, 50, 200, 50};
+        vib.vibrate(pattern, -1);
     }
 
     @Override

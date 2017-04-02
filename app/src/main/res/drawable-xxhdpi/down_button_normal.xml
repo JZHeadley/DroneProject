@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item>
+        <shape android:shape="rectangle">
+            <!--<stroke
+                android:width="1dip"
+                android:color="#5e7974" />-->
+            <gradient
+                android:angle="-90"
+                android:endColor="#000954"
+                android:startColor="#0019db" />
+            <padding
+                android:bottom="10dp"
+                android:left="10dp"
+                android:right="10dp"
+                android:top="10dp" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/down_arrow"
+        />
+</layer-list>

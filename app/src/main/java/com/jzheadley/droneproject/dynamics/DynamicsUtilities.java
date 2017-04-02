@@ -131,7 +131,7 @@ public class DynamicsUtilities {
 
 
 
-    public void setRemoteAttitudeInDegrees(double remAzim, double remPitch, double remRoll) {
+    public static void setRemoteAttitudeInDegrees(double remAzim, double remPitch, double remRoll) {
         remZ = Math.toRadians(remAzim);
         remX = Math.toRadians(remPitch);
         remY = Math.toRadians(remRoll);

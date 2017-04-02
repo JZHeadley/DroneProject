@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BebopActivity extends AppCompatActivity implements OrientationSensorInterface {
+
     private static final String TAG = "BebopActivity";
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
@@ -55,6 +56,10 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
     private int mNbMaxDownload;
     private BluetoothChatService mChatService = null;
     private BluetoothAdapter mBluetoothAdapter = null;
+
+    private static double az;
+    private static double pit;
+    private static double rol;
 
     private int mCurrentDownloadIndex;
     private final BebopDrone.Listener mBebopListener = new BebopDrone.Listener() {
@@ -202,8 +207,19 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                             // construct a string from the valid bytes in the buffer
                             String readMessage = new String(readBuf, 0, msg.arg1);
                             Log.d(TAG, "handleMessageReading: " + readMessage);
+                            String [] string = new String[3];
+                            string = readMessage.split(" ");
+                            int command = 0;
 
-                            int command = Integer.parseInt(readMessage.split(" ")[0]);
+                            if (string.length == 3) {
+                                az = Double.parseDouble(string[0]);
+                                pit = Double.parseDouble(string[1]);
+                                rol = Double.parseDouble(string[2]);
+                                ((TextView) findViewById(R.id.pitchTxt)).setText(String.format("RZDeg:%.2f", az));
+                                DynamicsUtilities.setRemoteAttitudeInDegrees(az, pit, rol);
+                            } else {
+                                command = Integer.parseInt(string[0]);
+                            }
 
                             switch (command) {
                                 case Constants.MESSAGE_OHSHIT:
@@ -236,6 +252,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                                     break;
                                 case Constants.MESSAGE_CALIBRATE:
                                     Log.d(TAG, "handleMessage: Calibrating");
+                                    DynamicsUtilities.calibrate();
                                     break;
                                 default:
                                     Log.d(TAG, "handleMessage: " + readMessage.split(" "));
@@ -287,6 +304,7 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
         DynamicsUtilities.viewY = Math.toRadians(ROLL);
 
 
+
         DynamicsUtilities.calcSlaveYaw();
         /*((TextView)findViewById(R.id.z)).setText(String.format("DZ: %.0f VZ: %.0f GL%.0f",
                 Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
@@ -294,10 +312,11 @@ public class BebopActivity extends AppCompatActivity implements OrientationSenso
                 Math.toDegrees(DynamicsUtilities.goLeftRad)));*/
         mBebopDrone.setYaw(DynamicsUtilities.yaw);
 
-        DynamicsUtilities.calcFixedPitchRoll();
-        ((TextView) findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d DZ:%.2f VZ:%.2f",
+        DynamicsUtilities.calcPitchRoll();
+        ((TextView) findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d RZ:%.2f DZ:%.2f VZ:%.2f",
                 DynamicsUtilities.pitch,
                 DynamicsUtilities.roll,
+                Math.toDegrees(DynamicsUtilities.remZ - DynamicsUtilities.remZ0),
                 Math.toDegrees(DynamicsUtilities.droneZ - DynamicsUtilities.droneZ0),
                 Math.toDegrees(DynamicsUtilities.viewZ - DynamicsUtilities.viewZ0)
         ));

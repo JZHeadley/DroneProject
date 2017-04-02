@@ -3,10 +3,13 @@ package com.jzheadley.droneproject.ui;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -98,6 +101,17 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     private Orientation orientationSensor;
     private boolean hasTakenOff = false;
 
+    public void vibrate(){
+        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vib.vibrate(300);
+    }
+
+    public void vibratePattern(){
+        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long[] pattern = {0, 150, 800};
+        vib.vibrate(pattern, 3);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,11 +143,14 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.d(TAG, "onTouch: LOOP ACTION DOWN");
+                        vibratePattern();
+                        view.setPressed(true);
                         sendMessage(Constants.MESSAGE_UP_START + "");
                         return true;
                     // break;
                     case MotionEvent.ACTION_UP:
                         Log.d(TAG, "onTouch: LOOP ACTION UP");
+                        view.setPressed(false);
                         sendMessage(Constants.MESSAGE_UP_STOP + "");
                         return true;
                 }
@@ -146,11 +163,14 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        vibrate();
+                        view.setPressed(true);
                         Log.d(TAG, "onTouch: LOOP ACTION DOWN");
                         sendMessage(Constants.MESSAGE_DOWN_START + "");
                         return true;
                     // break;
                     case MotionEvent.ACTION_UP:
+                        view.setPressed(false);
                         Log.d(TAG, "onTouch: LOOP ACTION UP");
                         sendMessage(Constants.MESSAGE_DOWN_STOP + "");
                         return true;

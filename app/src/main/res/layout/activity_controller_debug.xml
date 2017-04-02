@@ -1,44 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center_horizontal"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.jzheadley.droneproject.ui.ControllerDebugActivity">
 
     <TextView
         android:id="@+id/debug_controller_txtView"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/drone_up_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/up_btn_txt" />
+        android:background="@xml/up_button"
+        android:layout_width="250dp"
+        android:layout_height="255dp"
+        android:layout_alignParentRight="true"
+        style="?android:attr/borderlessButtonStyle"
+         />
 
     <Button
         android:id="@+id/drone_down_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/down_btn_txt" />
-
-    <Button
-        android:id="@+id/drone_takeoff_land_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/take_off" />
+        android:background="@xml/down_button"
+        android:layout_width="250dp"
+        android:layout_height="255dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/drone_up_btn"
+        style="?android:attr/borderlessButtonStyle"
+         />
 
     <Button
         android:id="@+id/calibrate_drone_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_toLeftOf="@+id/drone_up_btn"
+        android:layout_alignParentTop="true"
+        android:background="@xml/button_round"
         android:text="@string/calibrate_btn_txt" />
 
     <Button
+        android:id="@+id/drone_takeoff_land_btn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignBottom="@id/drone_down_btn"
+        android:layout_alignParentLeft="true"
+        android:background="@xml/button_round"
+        android:text="@string/take_off" />
+
+    <Button
         android:id="@+id/drone_emergency_btn"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/drone_up_btn"
+        android:background="@xml/button_red"
         android:text="@string/emergency_stop_btn_txt" />
-</LinearLayout>
+
+    <Button
+        android:id="@+id/flip_btn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/drone_emergency_btn"
+        android:layout_marginTop="20dp"
+        android:background="@xml/button_round"
+        android:text="@string/flip_btn" />
+</RelativeLayout>

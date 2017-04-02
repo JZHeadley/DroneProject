@@ -304,8 +304,8 @@ public class BebopActivity extends GvrActivity implements OrientationSensorInter
 
 
         DynamicsUtilities.calcInterimTilt();
-        ((TextView) findViewById(R.id.azimuthTxt)).setText(String.format("Theta:%.1f",
-                Math.toDegrees(DynamicsUtilities.thetaMoveRightFromCenterline)
+        ((TextView) findViewById(R.id.azimuthTxt)).setText(String.format("Heading:%.1f",
+                Math.toDegrees(DynamicsUtilities.viewZ - DynamicsUtilities.viewZ0)
         ));
         ((TextView) findViewById(R.id.rollTxt)).setText(String.format("Pi:%d Ro:%d RZ:%.2f DZ:%.2f VZ:%.2f",
                 DynamicsUtilities.pitch,

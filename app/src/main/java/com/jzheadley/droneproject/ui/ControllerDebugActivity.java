@@ -266,6 +266,9 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         Log.d(TAG, "connectDevice: " + device);
         // Attempt to connect to the device
         mChatService.connect(device, secure);
+        if (mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+            Toast.makeText(this, "You are connected!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -276,9 +279,10 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
     private void sendMessage(String message) {
         // Check that we're actually connected before trying anything
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
-            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         // Check that there's actually something to send
         if (message.length() > 0) {

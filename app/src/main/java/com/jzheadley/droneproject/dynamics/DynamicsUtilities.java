@@ -57,10 +57,10 @@ public class DynamicsUtilities {
             yaw = -99;
         } else if (goLeftRad < -1.0) {
             yaw = 99;
-        } else if (goLeftRad > 0.4) {
-            yaw = -10;
-        } else if (goLeftRad < -0.4) {
-            yaw = 10;
+        } else if (goLeftRad > 0.5) {
+            yaw = -30;
+        } else if (goLeftRad < -0.5) {
+            yaw = 30;
         } else if (goLeftRad > 0.1) {
             yaw = -10;
         } else if (goLeftRad < -0.1) {

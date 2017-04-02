@@ -1,109 +1,112 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/piloting_view"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.BebopActivity">
 
     <com.jzheadley.droneproject.view.BebopVideoView
         android:id="@+id/videoView"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.vr.sdk.base.GvrView
         android:id="@+id/vrView"
-        android:layout_centerInParent="true"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:visibility="invisible" />
 
 
     <TextView
         android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
         android:text="Battery: "
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ff0000" />
 
     <TextView
         android:id="@+id/batteryLabel"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/textView"
         android:layout_toRightOf="@+id/textView"
-        android:layout_width="wrap_content"
         android:text="XXX%"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ff0000" />
 
     <TextView
-        android:gravity="center_horizontal"
         android:id="@+id/azimuthTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/batteryLabel"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Azimuth: "
+        android:gravity="center_horizontal"
+        android:text="Heading: "
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FF0000" />
 
     <TextView
-        android:gravity="center_horizontal"
         android:id="@+id/pitchTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/azimuthTxt"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Pitch: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF0000" />
+        android:textColor="#FF0000"
+        android:visibility="invisible" />
 
     <TextView
-        android:gravity="center_horizontal"
         android:id="@+id/rollTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/pitchTxt"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Roll: "
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FF0000" />
+        android:textColor="#FF0000"
+        android:visibility="invisible" />
 
     <LinearLayout
-        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:orientation="vertical">
 
-        <Button
+        <ImageButton
             android:id="@+id/bluetooth_btn"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="ConnectBT" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bluetooth_searching" />
 
 
-        <Button
+        <ImageButton
             android:id="@+id/emergencyBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Emergency"
-            android:width="150dp" />
+            android:src="@drawable/ic_warning" />
 
-        <Button
+        <ImageButton
             android:id="@+id/VR_Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="VR" />
+            android:src="@drawable/ic_eye" />
     </LinearLayout>
 </RelativeLayout>

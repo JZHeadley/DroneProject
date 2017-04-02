@@ -18,11 +18,12 @@
         android:layout_marginTop="10dp"
         android:layout_weight=".08"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
+        android:textColor="#69fc4b"
         android:textSize="35sp" />
 
     <ImageView
         android:id="@+id/logo"
+        android:contentDescription="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -42,7 +43,9 @@
         android:background="@xml/button_round"
         android:text="@string/video_choice_btn_txt"
         android:textColor="#333333"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:drawableRight="@drawable/ic_video"
+        android:paddingEnd="45dp"/>
 
     <Button
         android:id="@+id/controllerBtn"
@@ -57,6 +60,8 @@
         android:padding="5dp"
         android:text="@string/drone_controller_btn_txt"
         android:textColor="#333333"
-        android:textSize="40sp" />
+        android:textSize="35sp"
+        android:drawableRight="@drawable/ic_controller"
+        android:paddingEnd="30dp"/>
 
 </LinearLayout>

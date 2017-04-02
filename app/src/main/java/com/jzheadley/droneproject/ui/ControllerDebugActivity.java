@@ -108,12 +108,6 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
         vib.vibrate(300);
     }
 
-    public void vibratePattern() {
-        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        long[] pattern = {0, 200, 50, 200, 50};
-        vib.vibrate(pattern, -1);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +140,7 @@ public class ControllerDebugActivity extends AppCompatActivity implements Orient
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.d(TAG, "onTouch: LOOP ACTION DOWN");
-                        vibratePattern();
+                        vibrate();
                         view.setPressed(true);
                         sendMessage(Constants.MESSAGE_UP_START + "");
                         return true;

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
+    android:background="@xml/gradient"
     android:orientation="horizontal"
     tools:context="com.jzheadley.droneproject.ui.ControllerDebugActivity">
 
@@ -21,36 +22,51 @@
             android:id="@+id/calibrate_drone_btn"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@xml/button"
+            android:drawableTop="@drawable/ic_calibrate"
+            android:paddingTop="30dp"
             android:text="@string/calibrate_btn_txt"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/drone_emergency_btn"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1.2"
             android:background="@xml/button_red"
-            android:text="@string/emergency_stop_btn_txt" />
+            android:padding="5dp"
+            android:text="@string/emergency_stop_btn_txt"
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/flip_btn"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@xml/button"
             android:text="@string/flip_btn"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:drawableTop="@drawable/ic_flip"
+            android:paddingTop="30dp"/>
 
         <Button
             android:id="@+id/drone_takeoff_land_btn"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@xml/button"
             android:text="@string/take_off"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:drawableTop="@drawable/ic_rocket"
+            android:paddingTop="30dp"/>
 
     </LinearLayout>
 
@@ -58,8 +74,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/drone_up_btn"

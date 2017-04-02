@@ -19,109 +19,109 @@
         android:text="Emergency"
         android:width="150dp" />
 
-    <Button
-        android:id="@+id/takePictureBt"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Take picture"
-        android:width="150dp" />
+    <!--<Button-->
+    <!--android:id="@+id/takePictureBt"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:text="Take picture"-->
+    <!--android:width="150dp" />-->
 
-    <Button
-        android:id="@+id/takeOffOrLandBt"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:width="150dp" />
+    <!--<Button-->
+    <!--android:id="@+id/takeOffOrLandBt"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:width="150dp" />-->
 
-    <Button
-        android:id="@+id/yawRightBt"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-        android:layout_width="75dp"
-        android:text="right" />
+    <!--<Button-->
+    <!--android:id="@+id/yawRightBt"-->
+    <!--android:layout_alignParentEnd="false"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:text="right" />-->
 
-    <Button
-        android:id="@+id/rollLeftBt"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-        android:layout_width="75dp"
-        android:text="left"
-        android:width="50dp" />
+    <!--<Button-->
+    <!--android:id="@+id/rollLeftBt"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:text="left"-->
+    <!--android:width="50dp" />-->
 
-    <Button
-        android:id="@+id/yawLeftBt"
-        android:layout_below="@+id/gazUpBt"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/gazUpBt"
-        android:layout_toStartOf="@+id/gazUpBt"
-        android:layout_width="75dp"
-        android:text="left" />
+    <!--<Button-->
+    <!--android:id="@+id/yawLeftBt"-->
+    <!--android:layout_below="@+id/gazUpBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toLeftOf="@+id/gazUpBt"-->
+    <!--android:layout_toStartOf="@+id/gazUpBt"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:text="left" />-->
 
-    <Button
-        android:id="@+id/rollRightBt"
-        android:layout_above="@+id/backBt"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/backBt"
-        android:layout_toRightOf="@+id/backBt"
-        android:layout_width="75dp"
-        android:text="right"
-        android:width="20dp" />
+    <!--<Button-->
+    <!--android:id="@+id/rollRightBt"-->
+    <!--android:layout_above="@+id/backBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toEndOf="@+id/backBt"-->
+    <!--android:layout_toRightOf="@+id/backBt"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:text="right"-->
+    <!--android:width="20dp" />-->
 
-    <Button
-        android:id="@+id/gazUpBt"
-        android:layout_above="@+id/yawRightBt"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/yawRightBt"
-        android:layout_toStartOf="@+id/yawRightBt"
-        android:layout_width="110dp"
-        android:text="up"
-        android:width="110dp" />
+    <!--<Button-->
+    <!--android:id="@+id/gazUpBt"-->
+    <!--android:layout_above="@+id/yawRightBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toLeftOf="@+id/yawRightBt"-->
+    <!--android:layout_toStartOf="@+id/yawRightBt"-->
+    <!--android:layout_width="110dp"-->
+    <!--android:text="up"-->
+    <!--android:width="110dp" />-->
 
-    <Button
-        android:id="@+id/gazDownBt"
-        android:layout_below="@+id/yawRightBt"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/yawLeftBt"
-        android:layout_toRightOf="@+id/yawLeftBt"
-        android:layout_width="110dp"
-        android:text="down"
-        android:width="110dp" />
+    <!--<Button-->
+    <!--android:id="@+id/gazDownBt"-->
+    <!--android:layout_below="@+id/yawRightBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toEndOf="@+id/yawLeftBt"-->
+    <!--android:layout_toRightOf="@+id/yawLeftBt"-->
+    <!--android:layout_width="110dp"-->
+    <!--android:text="down"-->
+    <!--android:width="110dp" />-->
 
-    <Button
-        android:id="@+id/forwardBt"
-        android:layout_alignTop="@+id/gazUpBt"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/rollLeftBt"
-        android:layout_toRightOf="@+id/rollLeftBt"
-        android:layout_width="110dp"
-        android:text="forward"
-        android:width="110dp" />
+    <!--<Button-->
+    <!--android:id="@+id/forwardBt"-->
+    <!--android:layout_alignTop="@+id/gazUpBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toEndOf="@+id/rollLeftBt"-->
+    <!--android:layout_toRightOf="@+id/rollLeftBt"-->
+    <!--android:layout_width="110dp"-->
+    <!--android:text="forward"-->
+    <!--android:width="110dp" />-->
 
-    <Button
-        android:id="@+id/backBt"
-        android:layout_below="@+id/rollLeftBt"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/rollLeftBt"
-        android:layout_toRightOf="@+id/rollLeftBt"
-        android:layout_width="110dp"
-        android:text="back"
-        android:width="110dp" />
+    <!--<Button-->
+    <!--android:id="@+id/backBt"-->
+    <!--android:layout_below="@+id/rollLeftBt"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toEndOf="@+id/rollLeftBt"-->
+    <!--android:layout_toRightOf="@+id/rollLeftBt"-->
+    <!--android:layout_width="110dp"-->
+    <!--android:text="back"-->
+    <!--android:width="110dp" />-->
 
-    <Button
-        android:id="@+id/downloadBt"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="Download"
-        android:width="150dp" />
+    <!--<Button-->
+    <!--android:id="@+id/downloadBt"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:text="Download"-->
+    <!--android:width="150dp" />-->
 
     <TextView
         android:id="@+id/textView"
@@ -147,37 +147,46 @@
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
+        android:id="@+id/azimuth_tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/batteryLabel"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/rollLeftBt"
-        android:layout_toRightOf="@+id/rollLeftBt"
-        android:layout_width="110dp"
-        android:text="roll"
+        android:layout_width="wrap_content"
+        android:text="Azimuth: "
         android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/azimuth_tv"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Pitch: "
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:width="50dp" />
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/textView3"
-        android:layout_alignEnd="@+id/gazDownBt"
-        android:layout_alignRight="@+id/gazDownBt"
-        android:layout_alignTop="@+id/textView2"
+        android:id="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
         android:layout_height="wrap_content"
-        android:layout_width="110dp"
-        android:text="yaw"
+        android:layout_width="wrap_content"
+        android:text="Roll: "
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:width="50dp" />
 
     <Button
         android:id="@+id/VR_Btn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/takeOffOrLandBt"
-        android:layout_toStartOf="@+id/takeOffOrLandBt"
+        android:layout_toRightOf="@+id/emergencyBt"
         android:layout_width="wrap_content"
         android:text="VR" />
 </RelativeLayout>
